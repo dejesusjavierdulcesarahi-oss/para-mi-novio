@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para mi niño bonito ♡</title>
+
+<style>
+:root {
+  --azul: #dce5f2;
+  --rosa: #c98f9c;
+  --crema: #fff9ef;
+  --dorado: #c6a66b;
+  --tinta: #526783;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Georgia, serif;
+  color: var(--tinta);
+  background:
+    radial-gradient(ellipse at top, #f9e9e9, transparent 65%),
+    linear-gradient(135deg, #dce5f2, #fff9ef, #e8dce9);
+  overflow-x: hidden;
+}
+
+.pantalla {
+  display: none;
+  min-height: 100vh;
+  padding: 30px 16px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  animation: aparecer 0.8s ease;
+}
+
+.pantalla.activa {
+  display: flex;
+}
+
+.contenido {
+  position: relative;
+  width: min(100%, 650px);
+  padding: 35px 24px;
+  border: 3px double var(--dorado);
+  outline: 1px solid #fff5df;
+  outline-offset: -10px;
+  border-radius: 180px 180px 18px 18px;
+  background: rgba(255, 249, 239, 0.94);
+  box-shadow: 0 12px 35px #8b799333;
+}
+
+h1, h2 {
+  font-weight: normal;
+  font-style: italic;
+  color: #9f7185;
+}
+
+h1 {
+  font-size: clamp(28px, 6vw, 43px);
+}
+
+h2 {
+  font-size: clamp(24px, 5vw, 32px);
+}
+
+p {
+  line-height: 1.9;
+  font-size: 16px;
+}
+
+.adornos {
+  color: var(--dorado);
+  letter-spacing: 8px;
+  font-size: 20px;
+}
+
+.flor {
+  position: fixed;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.7;
+  animation: flotar 5s ease-in-out infinite;
+}
+
+.flor.uno {
+  top: 8%;
+  left: 5%;
+  font-size: 34px;
+}
+
+.flor.dos {
+  right: 5%;
+  bottom: 12%;
+  font-size: 38px;
+  animation-delay: 1s;
+}
+
+.mariposa {
+  position: fixed;
+  z-index: 0;
+  pointer-events: none;
+  animation: volar 12s linear infinite;
+}
+
+.mariposa.uno {
+  top: 22%;
+  font-size: 24px;
+}
+
+.mariposa.dos {
+  top: 65%;
+  font-size: 20px;
+  animation-delay: 5s;
+}
+
+button {
+  font-family: Georgia, serif;
+  font-size: 15px;
+  color: #fffaf3;
+  background: #7187a8;
+  border: 1px solid var(--dorado);
+  border-radius: 25px;
+  padding: 12px 22px;
+  margin: 8px 4px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #b78494;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px #8b799333;
+}
+
+.sobre {
+  width: 230px;
+  height: 155px;
+  margin: 35px auto;
+  position: relative;
+  background: #d6b7bd;
+  border: 2px solid var(--dorado);
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 8px 18px #8b799333;
+}
+/* APERTURA 3D DEL SOBRE */
+.sobre {
+  perspective: 800px;
+  transform-style: preserve-3d;
+  box-shadow: 0 12px 20px #71608030;
+}
+
+.sobre::before {
+  transform-origin: top center;
+  backface-visibility: visible;
+  transition: transform 1s cubic-bezier(.2,.7,.3,1);
+}
+
+.sobre.abierto::before {
+  transform: rotateX(180deg);
+}
+
+.sobre.abierto::after {
+  opacity: 0;
+  transition: opacity .3s ease;
+}
+.sobre::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #e8d2d2;
+  clip-path: polygon(0 0, 50% 57%, 100% 0);
+  border-radius: 4px;
+  z-index: 2;
+  transform-origin: top;
+  transition: transform 1s ease;
+}
+
+.sobre::after {
+  content: "♡";
+  position: absolute;
+  top: 55px;
+  left: 95px;
+  z-index: 3;
+  width: 35px;
+  height: 35px;
+  line-height: 35px;
+  border-radius: 50%;
+  background: var(--crema);
+  color: #b78494;
+  font-size: 24px;
+  border: 1px solid var(--dorado);
+}
+
+.sobre.abierto::before {
+  transform: rotateX(180deg);
+}
+
+.sobre.abierto {
+  animation: latido 1s ease;
+}
+
+.texto-carta {
+  text-align: left;
+  padding: 0 5px;
+}
+
+.firma {
+  text-align: right;
+  font-style: italic;
+  color: #a56f83;
+  font-size: 20px;
+}
+
+.notas {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin: 25px 0;
+}
+
+.nota {
+  min-height: 115px;
+  padding: 18px 10px;
+  border: 1px solid var(--dorado);
+  box-shadow: 2px 4px 8px #756c6630;
+  color: #6f6475;
+  font-style: italic;
+  font-size: 15px;
+  cursor: pointer;
+  transition: transform 0.4s, background 0.3s;
+}
+
+.nota:nth-child(odd) {
+  background: #f1dfe3;
+  transform: rotate(-3deg);
+}
+
+.nota:nth-child(even) {
+  background: #e2e9f3;
+  transform: rotate(3deg);
+}
+
+.nota:hover {
+  transform: rotate(0) scale(1.04);
+}
+
+.nota span {
+  display: block;
+  font-size: 25px;
+  margin-bottom: 8px;
+}
+
+#mensajeNota {
+  display: none;
+  padding: 18px;
+  margin-top: 15px;
+  background: #f8e8e8;
+  border: 1px dashed var(--dorado);
+  border-radius: 12px;
+  animation: aparecer 0.5s ease;
+}
+
+.sorpresa {
+  font-size: 65px;
+  animation: latido 1.5s infinite;
+}
+
+.pie {
+  font-size: 12px;
+  color: #9b8d9d;
+  margin-top: 25px;
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes flotar {
+  0%, 100% { transform: translateY(0) rotate(-5deg); }
+  50% { transform: translateY(-18px) rotate(8deg); }
+}
+
+@keyframes volar {
+  0% { left: -10%; transform: translateY(0) rotate(0); }
+  50% { transform: translateY(-60px) rotate(15deg); }
+  100% { left: 110%; transform: translateY(20px) rotate(-15deg); }
+}
+
+@keyframes latido {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+@media (max-width: 400px) {
+  .contenido {
+    padding: 30px 17px;
+  }
+
+  .notas {
+    gap: 12px;
+  }
+
+  .nota {
+    font-size: 14px;
+    padding: 14px 7px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+/* ILUSTRACIONES ROCocÓ */
+.decoracion-floral {
+  width: min(100%, 260px);
+  height: auto;
+  display: block;
+  margin: 12px auto;
+  overflow: visible;
+  filter: drop-shadow(0 4px 5px #8c748533);
+}
+
+.marco-ilustrado {
+  position: relative;
+  overflow: hidden;
+}
+
+.esquina-floral {
+  position: absolute;
+  width: 105px;
+  height: 105px;
+  pointer-events: none;
+  opacity: 0.9;
+  z-index: 0;
+}
+
+.esquina-floral.arriba {
+  top: 0;
+  right: 0;
+}
+
+.esquina-floral.abajo {
+  bottom: 0;
+  left: 0;
+  transform: rotate(180deg);
+}
+
+.imagen-sobre {
+  width: min(100%, 280px);
+  height: auto;
+  display: block;
+  margin: 15px auto;
+  cursor: pointer;
+  filter: drop-shadow(0 7px 7px #71608033);
+  transition: transform 0.5s ease;
+}
+
+.imagen-sobre:hover {
+  transform: translateY(-5px) rotate(-1deg);
+}
+
+.nota-ilustrada {
+  position: relative;
+  overflow: hidden;
+}
+
+.nota-ilustrada::after {
+  content: "❀";
+  position: absolute;
+  bottom: 3px;
+  right: 8px;
+  font-size: 23px;
+  color: #bd9a64;
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+.ilustracion-final {
+  width: min(100%, 230px);
+  height: auto;
+  margin: 15px auto;
+  display: block;
+  animation: flotar 5s ease-in-out infinite;
+}
+
+@media (max-width: 400px) {
+  .esquina-floral {
+    width: 72px;
+    height: 72px;
+  }
+
+  .decoracion-floral {
+    max-width: 210px;
+  }
+}
+/* PAPEL ANTIGUO Y ENCAJE */
+.contenido {
+  background:
+    radial-gradient(ellipse at 0% 0%, #ead8d3aa, transparent 35%),
+    radial-gradient(ellipse at 100% 100%, #d9d4e8aa, transparent 38%),
+    linear-gradient(135deg, #fffaf0, #f8efdf, #fff9ef);
+  border: 4px double #c6a66b;
+  box-shadow:
+    0 12px 35px #8b799333,
+    inset 0 0 0 5px #fff9ef,
+    inset 0 0 0 7px #e5d1ac;
+}
+
+/* Adorno de encaje */
+.contenido::before {
+  content: "❦  ❧  ❦";
+  display: block;
+  color: #bd9a64;
+  font-size: 18px;
+  letter-spacing: 5px;
+  margin-bottom: 12px;
+  pointer-events: none;
+}
+
+/* Evita que el adorno interfiera con los botones */
+.contenido > * {
+  position: relative;
+}
+
+.contenido > .esquina-floral {
+  position: absolute;
+}
+
+/* NOTITAS DESPLEGABLES */
+.contenido-nota {
+  display: none;
+  margin: 12px 0 0;
+  padding-top: 10px;
+  border-top: 1px dashed #bd9a64;
+  font-size: 14px;
+  line-height: 1.7;
+  animation: aparecer .5s ease;
+}
+
+.nota.desplegada .contenido-nota {
+  display: block;
+}
+
+.nota.desplegada {
+  transform: rotate(0) scale(1.03);
+  background: #fff7ed;
+}
+/* FLORES Y MARIPOSAS FLOTANTES */
+.flores-voladoras {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 5;
+}
+
+.flores-voladoras span {
+  position: absolute;
+  bottom: -50px;
+  left: calc(var(--posicion, 10) * 1%);
+  font-size: 23px;
+  opacity: 0;
+  animation: subirFlor 12s linear infinite;
+}
+
+.flores-voladoras span:nth-child(1) {
+  --posicion: 12;
+  animation-delay: 0s;
+}
+
+.flores-voladoras span:nth-child(2) {
+  --posicion: 32;
+  animation-delay: 3s;
+}
+
+.flores-voladoras span:nth-child(3) {
+  --posicion: 52;
+  animation-delay: 1s;
+}
+
+.flores-voladoras span:nth-child(4) {
+  --posicion: 70;
+  animation-delay: 5s;
+}
+
+.flores-voladoras span:nth-child(5) {
+  --posicion: 86;
+  animation-delay: 7s;
+}
+
+.flores-voladoras span:nth-child(6) {
+  --posicion: 43;
+  animation-delay: 9s;
+}
+
+@keyframes subirFlor {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: .75;
+  }
+  85% {
+    opacity: .75;
+  }
+  100% {
+    transform: translateY(-115vh) rotate(45deg);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flores-voladoras span {
+    animation: none;
+    display: none;
+  }
+}
+/* REGALO SECRETO */
+#regaloSecreto {
+  margin: 18px auto;
+  padding: 20px;
+  border: 2px double #c6a66b;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #fff6e8, #f1dfe7);
+  animation: aparecer .8s ease;
+}
+
+#regaloSecreto[hidden] {
+  display: none;
+}
+/* CONTADOR DE CUMPLEAÑOS */
+.contador-cumple {
+  margin: 18px auto;
+  padding: 14px;
+  border: 1px dashed #c6a66b;
+  border-radius: 14px;
+  background: #fffaf0cc;
+  max-width: 360px;
+}
+
+.contador-cumple p {
+  margin: 0 0 8px;
+  font-style: italic;
+  color: #9f7185;
+}
+
+#contadorCumple {
+  font-size: 17px;
+  font-weight: bold;
+  color: #7187a8;
+  line-height: 1.8;
+}
+</style>
+</head>
+
+<body>
+
+<div class="flor uno">🌸</div>
+<div class="flor dos">🌹</div>
+<div class="mariposa uno">🦋</div>
+<div class="mariposa dos">🦋</div>
+
+<!-- PANTALLA 1: SOBRE -->
+<section class="pantalla activa" id="inicio">
+    <button id="botonMusica" onclick="alternarMusica()">
+  ♫ Activar melodía
+</button>
+  <div class="contenido">
+    <div class="adornos">✧ ❀ ✧</div>
+    <svg class="decoracion-floral"
+     viewBox="0 0 260 150"
+     role="img"
+     aria-label="Ramo de rosas rococó azules y rosas">
+
+  <defs>
+    <linearGradient id="petalosRosa" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f3d6d5"/>
+      <stop offset="100%" stop-color="#b97891"/>
+    </linearGradient>
+    <linearGradient id="petalosAzules" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#e1e9f5"/>
+      <stop offset="100%" stop-color="#879dbd"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Tallos y hojas -->
+  <g stroke="#829477" stroke-width="2" fill="none">
+    <path d="M130 140 Q100 90 60 45"/>
+    <path d="M130 140 Q150 85 196 42"/>
+    <path d="M130 140 Q130 90 130 35"/>
+  </g>
+
+  <g fill="#a6b79b" stroke="#718c75" stroke-width="1">
+    <ellipse cx="82" cy="85" rx="20" ry="8"
+             transform="rotate(30 82 85)"/>
+    <ellipse cx="164" cy="82" rx="21" ry="8"
+             transform="rotate(-35 164 82)"/>
+    <ellipse cx="111" cy="103" rx="18" ry="7"
+             transform="rotate(-25 111 103)"/>
+    <ellipse cx="148" cy="108" rx="18" ry="7"
+             transform="rotate(28 148 108)"/>
+  </g>
+
+  <!-- Rosa rosa viejo -->
+  <g transform="translate(61 42)">
+    <circle r="25" fill="url(#petalosRosa)"/>
+    <g fill="#d7a0ad" stroke="#b77c90" stroke-width="1.5">
+      <ellipse cy="-12" rx="9" ry="14"/>
+      <ellipse cy="12" rx="9" ry="14"/>
+      <ellipse cx="-12" rx="14" ry="9"/>
+      <ellipse cx="12" rx="14" ry="9"/>
+    </g>
+    <path d="M-9 1 Q-13 -13 0 -13 Q13 -13 9 1 Q3 12 -5 6 Q-10 1 -3 -5 Q5 -10 6 -2"
+          fill="none" stroke="#a76580" stroke-width="2"/>
+  </g>
+
+  <!-- Rosa azul empolvado -->
+  <g transform="translate(196 39)">
+    <circle r="24" fill="url(#petalosAzules)"/>
+    <g fill="#c2d0e5" stroke="#8298ba" stroke-width="1.5">
+      <ellipse cy="-11" rx="9" ry="13"/>
+      <ellipse cy="11" rx="9" ry="13"/>
+      <ellipse cx="-11" rx="13" ry="9"/>
+      <ellipse cx="11" rx="13" ry="9"/>
+    </g>
+    <path d="M-8 1 Q-12 -12 0 -12 Q12 -12 8 1 Q2 11 -5 5 Q-9 0 -3 -5 Q4 -9 5 -2"
+          fill="none" stroke="#7187a8" stroke-width="2"/>
+  </g>
+
+  <!-- Flor central crema -->
+  <g transform="translate(130 29)">
+    <g fill="#fff5df" stroke="#c6a66b" stroke-width="1.3">
+      <ellipse cy="-11" rx="7" ry="12"/>
+      <ellipse cy="11" rx="7" ry="12"/>
+      <ellipse cx="-11" rx="12" ry="7"/>
+      <ellipse cx="11" rx="12" ry="7"/>
+      <ellipse cx="-8" cy="-8" rx="7" ry="11"
+               transform="rotate(-45 -8 -8)"/>
+      <ellipse cx="8" cy="-8" rx="7" ry="11"
+               transform="rotate(45 8 -8)"/>
+    </g>
+    <circle r="5" fill="#c6a66b"/>
+  </g>
+
+  <!-- Detalles dorados -->
+  <g fill="#c6a66b">
+    <circle cx="31" cy="68" r="2"/>
+    <circle cx="224" cy="72" r="2"/>
+    <circle cx="101" cy="17" r="2"/>
+    <path d="M27 87 l3 -6 l3 6 l-3 6z"/>
+    <path d="M225 17 l3 -6 l3 6 l-3 6z"/>
+  </g>
+</svg>
+    <h1>Para mi niño bonito ♡</h1>
+    <p>He preparado algo muy especial para ti...</p>
+<div class="contador-cumple">
+  <p>La magia de tu día comienza en...</p>
+  <div id="contadorCumple">Preparando la sorpresa ♡</div>
+</div>
+    <div class="sobre" id="sobre" onclick="abrirSobre()"></div>
+
+    <p><em>Toca el sobre para abrir tu regalo</em></p>
+    <button onclick="abrirSobre()">Abrir mi carta ♡</button>
+
+    <div class="pie">Hecho con amor, por Sarita</div>
+  </div>
+</section>
+
+<!-- PANTALLA 2: CARTA -->
+<section class="pantalla" id="carta">
+  <div class="contenido">
+    <div class="adornos">❀ ♡ ❀</div>
+    <h2>Feliz cumpleaños, mi amor</h2>
+
+    <div class="texto-carta">
+      <p>Mi amor:</p>
+
+      <p>
+        Hoy es un día muy especial porque celebramos tu vida,
+        y quiero que sepas lo feliz que me hace que existas.
+        Entre tantas personas en el mundo, tengo la suerte de
+        coincidir contigo y de compartir contigo momentos que
+        guardo con muchísimo cariño.
+      </p>
+
+      <p>
+        Deseo que este nuevo año te regale razones para sonreír,
+        sueños que cumplir y momentos que hagan bonito tu camino.
+        Ojalá nunca olvides lo mucho que vales y lo especial que
+        eres para mí.
+      </p>
+
+      <p>
+        Quiero que recuerdes que puedes contar conmigo, en los días
+        bonitos y también en aquellos en los que todo parezca difícil.
+        Siempre voy a desear verte feliz y acompañarte en todo lo
+        bonito que la vida tenga preparado para ti.
+      </p>
+
+      <p>
+        Gracias por existir, por ser tú y por formar parte de mi vida.
+        Espero que hoy recibas todo el cariño que mereces.
+      </p>
+
+      <p>Feliz cumpleaños, mi niño bonito. Te quiero muchísimo. ♡</p>
+
+      <p class="firma">Con todo mi cariño,<br> Sarita ♡</p>
+    </div>
+
+    <button onclick="cambiarPantalla('notas')">
+      Tengo unas notitas para ti ✉
+    </button>
+  </div>
+</section>
+
+<!-- PANTALLA 3: NOTITAS -->
+<section class="pantalla" id="notas">
+  <div class="contenido">
+    <div class="adornos">✧ 🌷 ✧</div>
+    <h2>Pequeñas cosas que quiero decirte</h2>
+    <p>Toca cada notita para descubrir su mensaje.</p>
+
+    <div class="notas">
+      <div class="nota nota-ilustrada" onclick="mostrarNota(0)">
+        <span>♡</span>Una cosita...
+        <p class="contenido-nota">
+            De todas las casualidades bonitas de la vida,
+    conocerte es una de mis favoritas. ♡
+        </p>
+      </div>
+
+      <div class="nota nota-ilustrada" onclick="mostrarNota(1)">
+        <span>🌷</span>Para ti
+         <p class="contenido-nota">
+            Espero que hoy sonrías muchísimo y que la felicidad te acompañe incluso después de tu cumpleaños. 🌷
+        </p>
+      </div>
+
+      <div class="nota nota-ilustrada" onclick="mostrarNota(2)">
+        <span>✉</span>Un secreto
+        <p class="contenido-nota">
+           A veces no encuentro las palabras perfectas para explicar lo importante que eres para mí, pero mi cariño por ti es sincero. 💌
+        </p>
+      </div>
+
+      <div class="nota nota-ilustrada" onclick="mostrarNota(3)">
+        <span>🦋</span>No lo olvides
+        <p class="contenido-nota">
+           Nunca olvides que eres una persona especial y que mereces cosas bonitas, incluso en los días difíciles. 🦋
+        </p>
+      </div>
+
+      <div class="nota nota-ilustrda" onclick="mostrarNota(4)">
+        <span>✨</span>Un deseo
+        <p class="contenido-nota">
+           Mi deseo para ti es que cumplas tus sueños, encuentres paz en tu camino y tengas muchísimas razones para ser feliz. ✨
+        </p>
+      </div>
+    </div>
+
+    <div id="mensajeNota"></div>
+
+    <button onclick="cambiarPantalla('carta')">Volver a la carta</button>
+    <button onclick="cambiarPantalla('final')">Mi última sorpresa ♡</button>
+  </div>
+</section>
+
+<!-- PANTALLA 4: SORPRESA FINAL -->
+<section class="pantalla" id="final">
+  <div class="contenido">
+    <div class="adornos">✧ ♡ ✧</div>
+    <div class="sorpresa">💌</div>
+<svg class="ilustracion-final"
+     viewBox="0 0 220 150"
+     role="img"
+     aria-label="Mariposa rococó azul, rosa y dorada">
+
+  <g stroke="#b38a66" stroke-width="1.5">
+    <path d="M110 75
+      C80 10 20 10 35 55
+      C40 77 76 85 110 75
+      C144 85 180 77 185 55
+      C200 10 140 10 110 75Z"
+      fill="#dce5f2"/>
+
+    <path d="M110 75
+      C85 65 48 83 62 111
+      C75 132 100 105 110 75
+      C120 105 145 132 158 111
+      C172 83 135 65 110 75Z"
+      fill="#d6a3ae"/>
+
+    <path d="M110 54 Q95 24 84 31
+      M110 54 Q125 24 136 31"
+      fill="none"/>
+
+    <path d="M110 53 Q105 77 110 94
+      Q115 77 110 53Z"
+      fill="#c6a66b"/>
+  </g>
+
+  <g fill="#c6a66b">
+    <circle cx="61" cy="48" r="3"/>
+    <circle cx="159" cy="48" r="3"/>
+    <circle cx="84" cy="98" r="3"/>
+    <circle cx="136" cy="98" r="3"/>
+  </g>
+</svg>
+    <h2>Una última cosita...</h2>
+
+    <button id="botonSecreto" onclick="abrirRegalo()">
+  🎁 Abrir mi regalito secreto
+</button>
+
+<div id="regaloSecreto" hidden>
+  <div class="sorpresa">💝</div>
+  <h2>Un secreto para ti</h2>
+  <p>
+    Mi regalo más bonito es poder decirte que me alegra
+    que existas. Espero que la vida te regale muchísimos
+    momentos felices y que nunca te falten motivos para sonreír.
+  </p>
+  <p class="firma">Con cariño, Sarita ♡</p>
+</div>
+
+    <p>
+      Si pudiera pedir un deseo por ti, pediría que la vida te trate
+      bonito, que nunca te falten motivos para seguir soñando y que
+      siempre encuentres amor en las pequeñas cosas.
+    </p>
+
+    <p>
+      Y si algún día dudas de lo importante que eres, recuerda que
+      hay alguien que se alegra muchísimo de que existas.
+    </p>
+
+    <p>
+      Gracias por ser parte de mi historia.
+      Quiero que tengas un cumpleaños tan bonito como el cariño
+      que te tengo.
+    </p>
+
+    <div class="adornos">🌹 ♡ 🌹</div>
+    <p class="firma">Siempre con cariño,<br> Sarita ♡</p>
+
+    <button onclick="cambiarPantalla('inicio')">
+      Volver a abrir mi regalo ↶
+    </button>
+  </div>
+</section>
+
+<script>
+const mensajes = [
+  "De todas las casualidades bonitas de la vida, conocerte es una de mis favoritas. ♡",
+  "Espero que hoy sonrías muchísimo y que la felicidad te acompañe incluso después de tu cumpleaños. 🌷",
+  "A veces no encuentro las palabras perfectas para explicar lo importante que eres para mí, pero mi cariño por ti es sincero. 💌",
+  "Nunca olvides que eres una persona especial y que mereces cosas bonitas, incluso en los días difíciles. 🦋",
+  "Mi deseo para ti es que cumplas tus sueños, encuentres paz en tu camino y tengas muchísimas razones para ser feliz. ✨"
+];
+
+function cambiarPantalla(id) {
+  document.querySelectorAll(".pantalla").forEach(function(pantalla) {
+    pantalla.classList.remove("activa");
+  });
+
+  document.getElementById(id).classList.add("activa");
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+function abrirSobre() {
+  const sobre = document.getElementById("sobre");
+
+  sobre.classList.add("abierto");
+
+  setTimeout(function() {
+    cambiarPantalla("carta");
+    sobre.classList.remove("abierto");
+  }, 700);
+}
+
+function mostrarNota(indice) {
+  const tarjetas = document.querySelectorAll(".nota");
+  const tarjeta = tarjetas[indice];
+
+  if (!tarjeta) return;
+
+  const estabaAbierta = tarjeta.classList.contains("desplegada");
+
+  tarjetas.forEach(function(nota) {
+    nota.classList.remove("desplegada");
+  });
+
+  if (!estabaAbierta) {
+    tarjeta.classList.add("desplegada");
+  }
+}
+/* MELODÍA SUAVE GENERADA EN EL NAVEGADOR */
+let audioContexto = null;
+let musicaActiva = false;
+let temporizadorMusica = null;
+let notaActual = 0;
+
+const melodia = [
+  261.63, 329.63, 392.00, 329.63,
+  293.66, 349.23, 440.00, 349.23,
+  261.63, 329.63, 392.00, 523.25
+];
+
+function tocarNota(frecuencia) {
+  if (!audioContexto || !musicaActiva) return;
+
+  const oscilador = audioContexto.createOscillator();
+  const volumen = audioContexto.createGain();
+
+  oscilador.type = "sine";
+  oscilador.frequency.value = frecuencia;
+
+  volumen.gain.setValueAtTime(
+    0.0001,
+    audioContexto.currentTime
+  );
+
+  volumen.gain.exponentialRampToValueAtTime(
+    0.07,
+    audioContexto.currentTime + 0.08
+  );
+
+  volumen.gain.exponentialRampToValueAtTime(
+    0.0001,
+    audioContexto.currentTime + 0.7
+  );
+
+  oscilador.connect(volumen);
+  volumen.connect(audioContexto.destination);
+
+  oscilador.start();
+  oscilador.stop(audioContexto.currentTime + 0.75);
+}
+
+function alternarMusica() {
+  const boton = document.getElementById("botonMusica");
+
+  if (musicaActiva) {
+    musicaActiva = false;
+    clearInterval(temporizadorMusica);
+    boton.textContent = "♫ Activar melodía";
+    return;
+  }
+
+  const AudioAPI = window.AudioContext ||
+                   window.webkitAudioContext;
+
+  if (!AudioAPI) {
+    boton.textContent = "Audio no disponible";
+    return;
+  }
+
+  if (!audioContexto) {
+    audioContexto = new AudioAPI();
+  }
+
+  audioContexto.resume().then(function() {
+    musicaActiva = true;
+    boton.textContent = "♫ Pausar melodía";
+
+    tocarNota(melodia[notaActual]);
+
+    temporizadorMusica = setInterval(function() {
+      if (!musicaActiva) return;
+
+      notaActual = (notaActual + 1) % melodia.length;
+      tocarNota(melodia[notaActual]);
+    }, 650);
+  });
+}
+function abrirRegalo() {
+  const regalo = document.getElementById("regaloSecreto");
+  const boton = document.getElementById("botonSecreto");
+
+  regalo.hidden = false;
+  boton.textContent = "♡ Mi regalo secreto está abierto";
+  boton.disabled = true;
+}
+/* CONTADOR ANUAL */
+const MES_CUMPLEANOS = 10; // 10 = ocutubre
+const DIA_CUMPLEANOS = 29; // Día de ejemplo
+
+function actualizarContador() {
+  const salida = document.getElementById("contadorCumple");
+  if (!salida) return;
+
+  const ahora = new Date();
+  const mesActual = ahora.getMonth() + 1;
+  const diaActual = ahora.getDate();
+
+  if (
+    mesActual === MES_CUMPLEANOS &&
+    diaActual === DIA_CUMPLEANOS
+  ) {
+    salida.textContent = "¡Hoy es tu día especial! ♡";
+    return;
+  }
+
+  let anio = ahora.getFullYear();
+  let destino = new Date(
+    anio,
+    MES_CUMPLEANOS - 1,
+    DIA_CUMPLEANOS
+  );
+
+  if (destino <= ahora) {
+    destino = new Date(
+      anio + 1,
+      MES_CUMPLEANOS - 1,
+      DIA_CUMPLEANOS
+    );
+  }
+
+  const diferencia = destino.getTime() - ahora.getTime();
+
+  const dias = Math.floor(diferencia / 86400000);
+  const horas = Math.floor((diferencia % 86400000) / 3600000);
+  const minutos = Math.floor((diferencia % 3600000) / 60000);
+  const segundos = Math.floor((diferencia % 60000) / 1000);
+
+  salida.textContent =
+    dias + " días · " +
+    horas + " h · " +
+    minutos + " min · " +
+    segundos + " s";
+}
+
+actualizarContador();
+setInterval(actualizarContador, 1000);
+</script>
+<!-- DECORACIONES FLOTANTES -->
+<div class="flores-voladoras" aria-hidden="true">
+  <span>🌸</span>
+  <span>🌷</span>
+  <span>🦋</span>
+  <span>🌹</span>
+  <span>🦋</span>
+  <span>🌸</span>
+</div>
+</body>
+</html>
